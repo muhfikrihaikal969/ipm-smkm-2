@@ -1,0 +1,90 @@
+/* ===== IPM motion: tinta naik + ombak =====
+   Import sekali, mis. di app/layout.tsx:  import "./motion.css";
+   Semua animasi hanya pakai opacity/transform (ringan) dan mati otomatis
+   kalau perangkat meminta reduced motion. */
+
+/* Judul: tiap baris naik dari balik "garis" (mask) */
+.rise-mask {
+  display: block;
+  overflow: hidden;
+  padding: 0.06em 0 0.16em;
+  margin: -0.06em 0 -0.16em;
+}
+.rise-line {
+  display: block;
+  transform: translateY(108%);
+  transition: transform 1s cubic-bezier(0.22, 1, 0.36, 1);
+  transition-delay: calc(var(--i, 0) * 110ms);
+}
+[data-in="true"] .rise-line {
+  transform: translateY(0);
+}
+
+/* Paragraf: tiap kalimat naik pelan, alur teks tetap normal */
+.rise-inline {
+  position: relative;
+  top: 0.9em;
+  opacity: 0;
+  transition:
+    top 0.9s cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 0.7s ease-out;
+  transition-delay: calc(var(--i, 0) * 130ms);
+}
+[data-in="true"] .rise-inline {
+  top: 0;
+  opacity: 1;
+}
+
+/* Blok (kartu, gambar, tombol, baris list) */
+.rise-block {
+  opacity: 0;
+  transform: translateY(24px);
+  transition:
+    opacity 0.8s ease-out,
+    transform 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+  transition-delay: calc(var(--i, 0) * 100ms);
+}
+.rise-block[data-in="true"] {
+  opacity: 1;
+  transform: none;
+}
+
+/* Garis tiga warna di hero */
+@keyframes bar-grow {
+  from { transform: scaleX(0); }
+  to   { transform: scaleX(1); }
+}
+.bar-grow {
+  transform-origin: left;
+  animation: bar-grow 0.9s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+/* Ombak: geser horizontal satu periode penuh, jadi loop-nya mulus */
+@keyframes wave-drift {
+  to { transform: translate3d(-50%, 0, 0); }
+}
+.wave-drift {
+  animation: wave-drift 30s linear infinite;
+  will-change: transform;
+}
+.wave-drift-rev {
+  animation-direction: reverse;
+  animation-duration: 44s;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rise-line, .rise-inline, .rise-block {
+    transition: none;
+    transform: none;
+    top: 0;
+    opacity: 1;
+  }
+  .wave-drift, .bar-grow { animation: none; }
+}
+@media (scripting: none) {
+  .rise-line, .rise-inline, .rise-block {
+    transform: none;
+    top: 0;
+    opacity: 1;
+  }
+}

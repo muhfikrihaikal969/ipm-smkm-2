@@ -1,0 +1,45 @@
+@import "tailwindcss";
+
+@theme inline {
+  /* Tipografi — terhubung ke variabel next/font di app/layout.tsx */
+  --font-sans: var(--font-manrope), ui-sans-serif, system-ui, sans-serif;
+  --font-heading: var(--font-sora), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-space-mono), ui-monospace, SFMono-Regular, monospace;
+
+  /* Identitas Warna Existing PR IPM */
+  --color-ipm-blue: #005bac;
+  --color-ipm-green: #00a651;
+  --color-ipm-yellow: #f4c430;
+  --color-ipm-emerald: #10b981;
+  --color-ipm-amber: #f59e0b;
+
+  /* Token Permukaan (Surface Rhythm) */
+  --color-surface-light: #ffffff;
+  --color-surface-muted: #f8fafc;
+  --color-surface-dark: #0b132b;
+  --color-surface-card-dark: #131e3a;
+
+  /* Token Teks & Garis Batas */
+  --color-ink-primary: #0f172a;
+  --color-ink-secondary: #475569;
+  --color-border-subtle: #e2e8f0;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    font-family: var(--font-sans);
+    background-color: var(--color-surface-light);
+    color: var(--color-ink-primary);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1, h2, h3, h4 {
+    font-family: var(--font-heading);
+    letter-spacing: -0.02em;
+  }
+}
